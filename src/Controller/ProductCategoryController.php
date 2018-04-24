@@ -17,6 +17,8 @@ class ProductCategoryController extends Controller
 {
     /**
      * @Route("/", name="product_category_index", methods="GET")
+     * @param ProductCategoryRepository $productCategoryRepository
+     * @return Response
      */
     public function index(ProductCategoryRepository $productCategoryRepository): Response
     {
@@ -48,6 +50,8 @@ class ProductCategoryController extends Controller
 
     /**
      * @Route("/{id}", name="product_category_show", methods="GET")
+     * @param ProductCategory $productCategory
+     * @return Response
      */
     public function show(ProductCategory $productCategory): Response
     {
@@ -56,6 +60,9 @@ class ProductCategoryController extends Controller
 
     /**
      * @Route("/{id}/edit", name="product_category_edit", methods="GET|POST")
+     * @param Request $request
+     * @param ProductCategory $productCategory
+     * @return Response
      */
     public function edit(Request $request, ProductCategory $productCategory): Response
     {
@@ -76,6 +83,9 @@ class ProductCategoryController extends Controller
 
     /**
      * @Route("/{id}", name="product_category_delete", methods="DELETE")
+     * @param Request $request
+     * @param ProductCategory $productCategory
+     * @return Response
      */
     public function delete(Request $request, ProductCategory $productCategory): Response
     {
