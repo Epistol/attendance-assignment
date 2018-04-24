@@ -16,7 +16,6 @@ use Psr\Log\LoggerInterface;
 use Monolog\Handler\StreamHandler;
 
 
-
 class WhoareyouCommand extends Command
 {
     protected static $defaultName = 'whoareyou';
@@ -37,8 +36,7 @@ class WhoareyouCommand extends Command
         $this
             ->setDescription('Add a short description for your command')
             ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
+            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
     }
 
     /**
@@ -55,9 +53,9 @@ class WhoareyouCommand extends Command
 
         $helper = $this->getHelper('question');
         $question = new Question('Who are you ? ', 'Toto');
-       $result  =  $helper->ask($input, $output, $question);
+        $result = $helper->ask($input, $output, $question);
 
-        $this->logger->info('Qui qui se connecte a la commande : ' .  $result);
+        $this->logger->info('Qui qui se connecte a la commande : ' . $result);
 
     }
 
