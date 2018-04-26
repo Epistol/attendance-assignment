@@ -25,6 +25,7 @@ class ApiController extends Controller
     }
     /**
      * @Route("login", name="api_login")
+     * @Return token
      */
     public function login($mail, $psd){
         $repo = $this->getDoctrine()->getRepository(User::class);
@@ -32,7 +33,6 @@ class ApiController extends Controller
             'Email' => $mail,
             'Password' => hash(sha512, $psd, true),
         ]);
-
         if (!$user) {
             throw $this->createNotFoundException(
               "Perdu", 404
@@ -43,17 +43,30 @@ class ApiController extends Controller
 
     /**
      * @Route("refreshToken", name="api_refresh_token")
+     * @Return : token
      */
     public function refreshToken($token){
        if($id = $this->is_user_logged($token) != false){
-            $this->update_token($id,$token);
+            $token = $this->update_token($id,$token);
+            if(!$token){
+                throw $this->createNotFoundException(
+                    "Perdu", 404
+                );
+            }
+            return new JsonResponse($token);
        }
        else {
-           return new JsonResponse("Error",404);
+           throw $this->createNotFoundException(
+               "Perdu", 404
+           );
        }
 
     }
 
+    /**
+     * @param $token
+     * @return JsonResponse
+     */
     private function is_user_logged($token){
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->findOneBy([
@@ -68,6 +81,11 @@ class ApiController extends Controller
         return new JsonResponse($user);
     }
 
+    /**
+     * @param $id
+     * @param $token
+     * @return JsonResponse
+     */
     private function update_token($id, $token){
 
         $repo = $this->getDoctrine()->getRepository(User::class);
