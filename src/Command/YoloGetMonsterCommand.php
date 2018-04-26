@@ -23,11 +23,11 @@ class YoloGetMonsterCommand extends Command
      * YoloGetMonsterCommand constructor.
      * @param MonsterRepository $monsterRepository
      */
-    public function __construct(MonsterRepository $monsterRepository)
+   /* public function __construct(MonsterRepository $monsterRepository)
     {
         parent::__construct();
         $this->monsterRepository = $monsterRepository;
-    }
+    }*/
 
     protected function configure()
     {
@@ -42,11 +42,11 @@ class YoloGetMonsterCommand extends Command
 //        $io = new SymfonyStyle($input, $output);
 //        $arg1 = $input->getArgument('arg1');
 
-        $lesgrosmonstres = $this->monsterRepository->findAll();
+    /*    $lesgrosmonstres = $this->monsterRepository->findAll();
         foreach ($lesgrosmonstres as $monster){
             $output->writeln("<info>".$monster->getName()."</info><comment>".$monster->getType()."</comment>");
         }
-
+*/
 
 
 

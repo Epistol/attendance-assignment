@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <img src="{{ qr_code_data_uri(message, { writer: 'svg', size: 150 }) }}" />
+{% endblock %}

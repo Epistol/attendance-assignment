@@ -9,3 +9,5 @@ easy_admin:
     entities:
         # List the entity class name you want to manage
         - App\Entity\ProductCategory
+        - App\Entity\Monster
+        - App\Entity\Monster
