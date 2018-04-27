@@ -24,14 +24,14 @@ class ApiController extends Controller
         ]);
     }
     /**
-     * @Route("login", name="api_login")
-     * @Return token
+     * @Route("/login", name="api_login",  methods={"GET", "POST"})
+     *  return token
      */
-    public function login($mail, $psd){
+    public function login(Request $request){
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->findOneBy([
-            'Email' => $mail,
-            'Password' => hash(sha512, $psd, true),
+            'Email' => $request->get('mail'),
+            'Password' => hash(sha512, $request->get('password'), true),
         ]);
         if (!$user) {
             throw $this->createNotFoundException(
@@ -43,7 +43,7 @@ class ApiController extends Controller
 
     /**
      * @Route("refreshToken", name="api_refresh_token")
-     * @Return : token
+     *  return : token
      */
     public function refreshToken($token){
        if($id = $this->is_user_logged($token) != false){
@@ -65,7 +65,7 @@ class ApiController extends Controller
 
     /**
      * @param $token
-     * @return JsonResponse
+     * return JsonResponse
      */
     private function is_user_logged($token){
         $repo = $this->getDoctrine()->getRepository(User::class);
@@ -84,7 +84,7 @@ class ApiController extends Controller
     /**
      * @param $id
      * @param $token
-     * @return JsonResponse
+     * return JsonResponse
      */
     private function update_token($id, $token){
 
@@ -105,10 +105,12 @@ class ApiController extends Controller
         }
             return new JsonResponse(false);
 
+    }
 
-
-
-
+    public function getLocation($token){
+        if($this->is_user_logged($token)){
+            
+        }
     }
 
 
