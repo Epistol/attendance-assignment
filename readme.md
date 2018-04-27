@@ -38,8 +38,8 @@ Note : Tous les users sont dans tous les événements. Pas de back-office.
   
 # API  
 
-* [X] **POST /api/login**  
-   
+## POST /api/login 
+   * [X]
 ### Input  
   
 * Email string 300  
@@ -62,8 +62,8 @@ Note : Tous les users sont dans tous les événements. Pas de back-office.
 }  
 ```  
   
-* [X] **POST /api/refreshToken**  
-
+## POST /api/refreshToken
+* [X] 
   
 ### Input:  
   
@@ -84,7 +84,8 @@ Note : Tous les users sont dans tous les événements. Pas de back-office.
    "token": "1234567890123456789012345678901234567890"  
 }  
 ```  
-* [ ] **GET /api/getLocation (salle prévue)**  
+##GET /api/getLocation (salle prévue au moment de la requete)
+  * [ ]
   
 ### Input  
   
@@ -109,8 +110,8 @@ Note : Tous les users sont dans tous les événements. Pas de back-office.
 }  
 ```  
 
-* [ ] **POST /api/checkIn**
-  
+## POST /api/checkIn
+  * [ ] 
 ### Input  
   
 * QRCodeData string 40  

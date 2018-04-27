@@ -12,9 +12,9 @@ class Location
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="integer")
      */
-    private $Id;
+    private $id;
 
     /**
      * @ORM\Column(type="integer")
@@ -31,16 +31,11 @@ class Location
      */
     private $description;
 
+
+
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setId(int $Id): self
-    {
-        $this->Id = $Id;
-
-        return $this;
     }
 
     public function getBeacon(): ?int
@@ -60,7 +55,7 @@ class Location
         return $this->QRCode;
     }
 
-    public function setQRCode(string $QRCode): self
+    public function setQRCode(?string $QRCode): self
     {
         $this->QRCode = $QRCode;
 
@@ -78,4 +73,6 @@ class Location
 
         return $this;
     }
+
+
 }

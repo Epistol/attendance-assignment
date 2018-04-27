@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Event;
 use App\Entity\User;
+use DateTime;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,6 +75,28 @@ class ApiController extends Controller
     }
 
     /**
+     * @Route("/getLocation", name="api_getLocation", methods={"GET"})
+     * @param Request $request
+     * @return Response
+     */
+    public function getLocation(Request $request)
+    {
+        $token = $request->get('Token');
+
+        $current_time = new DateTime();
+        $current_time->format('Y-m-d H:i:s');
+
+        dump($current_time);
+
+   /*     if ($this->token_exist($token)) {
+            return $this->current_location();
+
+        }*/
+        return new Response($token);
+    }
+
+
+    /**
      * @param $token
      * @return bool
      */
@@ -112,11 +136,28 @@ class ApiController extends Controller
         return $rd;
     }
 
-    public function getLocation($token)
+    /**
+     * @return DateTime
+     */
+    private function current_location()
     {
-        if ($this->is_user_logged($token)) {
 
-        }
+        $current_time = new DateTime();
+        $current_time->format('Y-m-d H:i:s');
+
+
+        return $current_time;
+
+        /*        $entityManager = $this->getDoctrine()->getManager();
+                $user = $entityManager->getRepository(Event::class)->findOneBy([
+                    'Token' => $token
+                ]);*/
+
+
+//        on return {
+//   "date": "",
+//   "location": "Salle 7"
+//}
     }
 
 
