@@ -22,14 +22,12 @@ class Event
     private $Name;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="test")
      */
     private $Location;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $Date;
+
+
 
     public function getId()
     {
@@ -48,27 +46,22 @@ class Event
         return $this;
     }
 
-    public function getLocation(): ?int
+    public function getLocation(): ?Location
     {
         return $this->Location;
     }
 
-    public function setLocation(int $Location): self
+    public function setLocation(?Location $Location): self
     {
         $this->Location = $Location;
 
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->Date;
-    }
-
-    public function setDate(\DateTimeInterface $Date): self
-    {
-        $this->Date = $Date;
-
-        return $this;
+    /**
+     * @return mixed
+     */
+    public function __toString() {
+        return $this->getId();
     }
 }

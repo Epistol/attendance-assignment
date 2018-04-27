@@ -136,7 +136,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @return DateTime
+     * @return JsonResponse
      */
     private function current_location()
     {
@@ -150,6 +150,7 @@ class ApiController extends Controller
 
 
         return $events;
+
 
 
 
