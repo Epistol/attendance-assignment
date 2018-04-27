@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,20 +24,23 @@ class ApiController extends Controller
             'controller_name' => 'ApiController',
         ]);
     }
+
     /**
      * @Route("/login", name="api_login",  methods={"GET", "POST"})
      *  return token
+     * @param Request $request
+     * @return JsonResponse
      */
     public function login(Request $request){
+        $mail = $request->get('Email');
+        $psw = $request->get('Password');
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->findOneBy([
-            'Email' => $request->get('mail'),
-            'Password' => hash(sha512, $request->get('password'), true),
+            'Email' => $mail,
+            'Password' => hash('sha512', $psw)
         ]);
         if (!$user) {
-            throw $this->createNotFoundException(
-              "Perdu", 404
-            );
+            return new JsonResponse(boolval(false));
         }
         return new JsonResponse($user->getToken());
     }
