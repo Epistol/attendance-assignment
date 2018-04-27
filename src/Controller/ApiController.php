@@ -12,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * @Route("/api", name="api")
  */
-
 class ApiController extends Controller
 {
     /**
@@ -30,7 +29,8 @@ class ApiController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $mail = $request->get('Email');
         $psw = $request->get('Password');
         $repo = $this->getDoctrine()->getRepository(User::class);
@@ -49,73 +49,73 @@ class ApiController extends Controller
      *  return : token
      * @param Request $request
      * @return JsonResponse
+     * @throws \Exception
      */
-    public function refreshToken(Request $request){
+    public function refreshToken(Request $request)
+    {
         $token = $request->get('Token');
 
 
-        if($id = $this->is_user_logged($token) != false){
-            $token = $this->update_token($id,$token);
-            if(!$token){
+        if ($this->token_exist($token)) {
+
+            $token_new = $this->update_token($token);
+            if (!$token) {
                 throw $this->createNotFoundException(
                     "Perdu", 404
                 );
             }
-            return new JsonResponse($token);
-        }
-        else {
+            return new JsonResponse($token_new);
+        } else {
             throw $this->createNotFoundException(
                 "Perdu", 404
             );
         }
-
-
     }
 
     /**
      * @param $token
-     * return JsonResponse
+     * @return bool
      */
-    private function is_user_logged($token){
+    private function token_exist($token)
+    {
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->findOneBy([
             'Token' => $token
         ]);
 
         if (!$user) {
-            return new JsonResponse(false);
+            return false;
         }
-        return new JsonResponse($user);
+        return true;
     }
 
     /**
      * @param $id
      * @param $token
-     * return JsonResponse
+     * @return bool
+     * @throws \Exception
      */
-    private function update_token($id, $token){
-
-        $repo = $this->getDoctrine()->getRepository(User::class);
-        $user = $repo->findOneBy([
-            'id' => $id,
+    private function update_token($token)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->findOneBy([
             'Token' => $token
         ]);
-        if($user){
-            try {
-                $rd = bin2hex(random_bytes(40));
-            } catch (\Exception $e) {
-            }
-            $user->setToken($rd);
-
-            return new JsonResponse(true);
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'Not found'
+            );
         }
-            return new JsonResponse(false);
-
+        $rd = bin2hex(random_bytes(40));
+        $user->setToken($rd);
+        $entityManager->flush();
+        return $rd;
     }
 
-    public function getLocation($token){
-        if($this->is_user_logged($token)){
-            
+    public function getLocation($token)
+    {
+        if ($this->is_user_logged($token)) {
+
         }
     }
 
