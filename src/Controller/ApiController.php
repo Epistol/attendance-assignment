@@ -27,7 +27,6 @@ class ApiController extends Controller
 
     /**
      * @Route("/login", name="api_login",  methods={"GET", "POST"})
-     *  return token
      * @param Request $request
      * @return JsonResponse
      */
@@ -37,7 +36,7 @@ class ApiController extends Controller
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->findOneBy([
             'Email' => $mail,
-            'Password' => hash('sha512', $psw)
+            'Password' => $psw
         ]);
         if (!$user) {
             return new JsonResponse(boolval(false));
