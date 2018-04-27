@@ -20,14 +20,15 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param $value
      * @return Event[] Returns an array of Event objects
      */
 
     public function findBetweenDateOneHour($value)
     {
-//        $valueminus_one =
+
         return $this->createQueryBuilder('e')
-            ->andWhere('e.date =  :val')
+            ->andWhere('e.date BETWEEN HOUR(":val") AND HOUR(":val")+1 ')
             ->setParameter('val', $value)
             ->orderBy('e.id', 'ASC')
             ->setMaxResults(10)

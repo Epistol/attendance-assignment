@@ -87,6 +87,7 @@ class ApiController extends Controller
         $current_time->format('Y-m-d H:i:s');
 
         dump($current_time);
+        dump($this->current_location($current_time));
 
    /*     if ($this->token_exist($token)) {
             return $this->current_location();
@@ -143,15 +144,15 @@ class ApiController extends Controller
     {
 
         $current_time = new DateTime();
-        $current_time->format('Y-m-d H:i:s');
+        $current = $current_time->format('Y-m-d H:i:s');
+
+        $events = $this->getDoctrine()
+            ->getRepository(Event::class)
+            ->findBetweenDateOneHour($current);
 
 
-        return $current_time;
+        return $events;
 
-        /*        $entityManager = $this->getDoctrine()->getManager();
-                $user = $entityManager->getRepository(Event::class)->findOneBy([
-                    'Token' => $token
-                ]);*/
 
 
 //        on return {

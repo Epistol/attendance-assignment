@@ -168,3 +168,6 @@ Select a location. Posts to /getQRCode
 * location string  
   
 Displays a QRCode relevent to the location and refreshes every 30 seconds.
+
+
+Y'a des stats aussi sur les QR CODE
