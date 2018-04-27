@@ -84,7 +84,7 @@ Note : Tous les users sont dans tous les événements. Pas de back-office.
    "token": "1234567890123456789012345678901234567890"  
 }  
 ```  
-##GET /api/getLocation (salle prévue au moment de la requete)
+## GET /api/getLocation (salle prévue au moment de la requete)
   * [ ]
   
 ### Input  
