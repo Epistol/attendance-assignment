@@ -136,7 +136,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     private function current_location()
     {
@@ -144,7 +144,10 @@ class ApiController extends Controller
         $current_time = new DateTime();
         $current = $current_time->format('Y-m-d H:i:s');
 
-$events = "hello";
+        $events = $this->getDoctrine()
+            ->getRepository(Event::class)
+            ->findBetweenDateOneHour($current);
+
 
         return $events;
 

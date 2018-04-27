@@ -23,7 +23,7 @@ class EventRepository extends ServiceEntityRepository
 
     /**
      * @param $value = Current time
-     * @return Event[] Returns an array of Event objects
+     * @return DateTime
      */
 
     public function findBetweenDateOneHour($value)
@@ -31,10 +31,11 @@ class EventRepository extends ServiceEntityRepository
         $prev = $this->roundToHour($value, "PREV");
         $next = $this->roundToHour($value, "NEXT");
 
+
         return $this->createQueryBuilder('e')
-            ->andWhere('e.date BETWEEN ":val" AND :next ')
-            ->setParameter('val', $value)
-            ->setParameter('next', $next)
+            ->andWhere('e.Date BETWEEN :prev AND :next ')
+            ->setParameter('prev', $prev->format('Y-m-d H:i'))
+            ->setParameter('next', $next->format('Y-m-d H:i'))
             ->orderBy('e.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
@@ -51,12 +52,10 @@ class EventRepository extends ServiceEntityRepository
         $date = new DateTime($dateString);
         $minutes = $date->format('i');
         if ($minutes > 0) {
-            if($next_or_prev = "NEXT"){
+            if($next_or_prev == "NEXT"){
                 $date->modify("+1 hour");
             }
-            else {
-                $date->modify("- hour");
-            }
+
 
             $date->modify('-'.$minutes.' minutes');
         }
