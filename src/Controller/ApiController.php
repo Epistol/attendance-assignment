@@ -26,7 +26,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/login", name="api_login",  methods={"GET", "POST"})
+     * @Route("/login", name="api_login",  methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
@@ -45,11 +45,16 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("refreshToken", name="api_refresh_token")
+     * @Route("/refreshToken", name="api_refresh_token", methods={"POST"})
      *  return : token
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function refreshToken($token){
-       if($id = $this->is_user_logged($token) != false){
+    public function refreshToken(Request $request){
+        $token = $request->get('Token');
+
+
+        if($id = $this->is_user_logged($token) != false){
             $token = $this->update_token($id,$token);
             if(!$token){
                 throw $this->createNotFoundException(
@@ -57,12 +62,13 @@ class ApiController extends Controller
                 );
             }
             return new JsonResponse($token);
-       }
-       else {
-           throw $this->createNotFoundException(
-               "Perdu", 404
-           );
-       }
+        }
+        else {
+            throw $this->createNotFoundException(
+                "Perdu", 404
+            );
+        }
+
 
     }
 
@@ -73,13 +79,11 @@ class ApiController extends Controller
     private function is_user_logged($token){
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->findOneBy([
-            'token' => $token
+            'Token' => $token
         ]);
 
         if (!$user) {
-            throw $this->createNotFoundException(
-                false, 404
-            );
+            return new JsonResponse(false);
         }
         return new JsonResponse($user);
     }
@@ -94,7 +98,7 @@ class ApiController extends Controller
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->findOneBy([
             'id' => $id,
-            'token' => $token
+            'Token' => $token
         ]);
         if($user){
             try {
@@ -102,7 +106,6 @@ class ApiController extends Controller
             } catch (\Exception $e) {
             }
             $user->setToken($rd);
-            $user->flush();
 
             return new JsonResponse(true);
         }
