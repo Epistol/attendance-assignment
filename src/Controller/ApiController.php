@@ -83,11 +83,9 @@ class ApiController extends Controller
     {
         $token = $request->get('Token');
 
-        $current_time = new DateTime();
-        $current_time->format('Y-m-d H:i:s');
 
-        dump($current_time);
-        dump($this->current_location($current_time));
+
+        dump($this->current_location($token));
 
    /*     if ($this->token_exist($token)) {
             return $this->current_location();
@@ -138,7 +136,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @return DateTime
+     * @return string
      */
     private function current_location()
     {
@@ -146,10 +144,7 @@ class ApiController extends Controller
         $current_time = new DateTime();
         $current = $current_time->format('Y-m-d H:i:s');
 
-        $events = $this->getDoctrine()
-            ->getRepository(Event::class)
-            ->findBetweenDateOneHour($current);
-
+$events = "hello";
 
         return $events;
 
@@ -159,6 +154,8 @@ class ApiController extends Controller
 //   "date": "",
 //   "location": "Salle 7"
 //}
+
+
     }
 
 
