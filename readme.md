@@ -169,5 +169,4 @@ Select a location. Posts to /getQRCode
   
 Displays a QRCode relevent to the location and refreshes every 30 seconds.
 
-
-Y'a des stats aussi sur les QR CODE
+Note : première fois que j'utilise Symfony au dela de la 1.4 
